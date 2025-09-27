@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import TopBar from "@/components/TopBar";
-import Sidebar from "@/components/Sidebar";
+import TopBar from "../components/TopBar";
+import Sidebar from "../components/Sidebar";
 import { HelpCircle, FileDown } from "lucide-react";
 
 const convertToCSV = (data) => {

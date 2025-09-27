@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import TopBar from "@/components/TopBar";
-import Sidebar from "@/components/Sidebar";
+import TopBar from "../components/TopBar";
+import Sidebar from "../components/Sidebar";
 import { HelpCircle } from "lucide-react";
 
 export default function UpdateChargePage() {
