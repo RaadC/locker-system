@@ -17,7 +17,7 @@ export default function UserCreditsPage() {
   useEffect(() => {
     const fetchHistory = () => {
       axios
-        .get("http://localhost:3000/api/display/load-history")
+        .get("/api/display/load-history")
         .then((res) => setHistory(res.data))
         .catch((err) => console.error("Failed to fetch load history", err));
     };
@@ -42,7 +42,7 @@ export default function UserCreditsPage() {
 
     try {
       const response = await axios.put(
-        "http://localhost:3000/api/settings/add-credits",
+        "/api/settings/add-credits",
         {
           tupcID,
           amount: parseFloat(amount),

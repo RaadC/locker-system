@@ -28,9 +28,9 @@ export default function SuperadminPage() {
     const fetchData = async () => {
       try {
         const [accRes, loadRes, lockerRes] = await Promise.all([
-          axios.get("http://localhost:3000/api/account"),
-          axios.get("http://localhost:3000/api/display/load-history"),
-          axios.get("http://localhost:3000/api/display/locker-history"),
+          axios.get("/api/account"),
+          axios.get("/api/display/load-history"),
+          axios.get("/api/display/locker-history"),
         ]);
 
         setAccount(accRes.data || []);
@@ -47,7 +47,7 @@ export default function SuperadminPage() {
 
   const handleAddAccount = async (formData) => {
     try {
-      await axios.post("http://localhost:3000/api/account", {
+      await axios.post("/api/account", {
         email: formData.email,
         password: formData.password,
         role: formData.role || 0,
@@ -62,7 +62,7 @@ export default function SuperadminPage() {
   const handleUpdatePassword = async (formData) => {
     try {
       await axios.put(
-        `http://localhost:3000/api/account/${formData.id}`,
+        `/api/account/${formData.id}`,
         {
           password: formData.password,
         }
@@ -76,7 +76,7 @@ export default function SuperadminPage() {
 
   const handleDeleteAccount = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/account/${id}`);
+      await axios.delete(`/api/account/${id}`);
       setToast({ message: "Account deleted", type: "success" });
       setDeleteOpen(null);
     } catch (err) {
@@ -86,7 +86,7 @@ export default function SuperadminPage() {
 
   const handleDeleteLoadHistory = async () => {
     try {
-      await axios.delete("http://localhost:3000/api/history/load");
+      await axios.delete("/api/history/load");
       setLoadHistory([]);
       setToast({ message: "Load history cleared", type: "success" });
     } catch {
@@ -96,7 +96,7 @@ export default function SuperadminPage() {
 
   const handleDeleteLockerHistory = async () => {
     try {
-      await axios.delete("http://localhost:3000/api/history/locker");
+      await axios.delete("/api/history/locker");
       setLockerHistory([]);
       setToast({ message: "Locker history cleared", type: "success" });
     } catch {

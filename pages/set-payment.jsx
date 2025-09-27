@@ -17,7 +17,7 @@ export default function UpdateChargePage() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/display/total-charge")
+      .get("/api/display/total-charge")
       .then((res) => {
         setCurrentCharge(res.data.currentCharge);
         setCurrentValue(res.data.currentCharge);
@@ -51,7 +51,7 @@ export default function UpdateChargePage() {
       return;
     }
     try {
-      await axios.put("http://localhost:3000/api/settings/update", {
+      await axios.put("/api/settings/update", {
         currentCharge: number,
       });
       setMessage("Charge updated successfully!");
@@ -69,7 +69,7 @@ export default function UpdateChargePage() {
       return;
     }
     try {
-      await axios.put("http://localhost:3000/api/settings/update", {
+      await axios.put("/api/settings/update", {
         currentCharge: 0,
       });
       setCurrentCharge(0);

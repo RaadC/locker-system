@@ -14,7 +14,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchLockers = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/display/all-lockers");
+        const res = await fetch("/api/display/all-lockers");
         const data = await res.json();
         setLockers(data);
       } catch (err) {

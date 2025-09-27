@@ -40,7 +40,7 @@ export default function LockerHistoryPage() {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/display/locker-history");
+        const res = await fetch("/api/display/locker-history");
         const data = await res.json();
         setHistory(data);
       } catch (error) {

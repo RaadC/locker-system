@@ -17,7 +17,7 @@ export default function ControlLockerPage() {
   useEffect(() => {
     const fetchUsedLocker = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/display/used-lockers");
+        const res = await axios.get("/api/display/used-lockers");
         setUsedLocker(res.data);
       } catch (err) {
         console.error("Failed to fetch locker in use", err);
@@ -43,7 +43,7 @@ export default function ControlLockerPage() {
     if (!confirm(`Are you sure you want to open locker for ${tupcID}?`)) return;
     try {
       // Post to text-input endpoint
-      const res = await axios.post("http://localhost:3000/api/locker/text-input", {
+      const res = await axios.post("/api/locker/text-input", {
         textInput: tupcID,
       });
 

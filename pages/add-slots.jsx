@@ -17,7 +17,7 @@ export default function UpdateTotalLockerPage() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/display/total-charge")
+      .get("/api/display/total-charge")
       .then((res) => {
         setTotalLocker(res.data.totalLocker);
         setCurrentValue(res.data.totalLocker);
@@ -28,7 +28,7 @@ export default function UpdateTotalLockerPage() {
   useEffect(() => {
     const fetchActiveLockers = () => {
       axios
-        .get("http://localhost:3000/api/display/used-lockers")
+        .get("/api/display/used-lockers")
         .then((res) => setActiveLockers(res.data))
         .catch((err) => console.error("Failed to fetch active lockers", err));
     };
@@ -65,7 +65,7 @@ export default function UpdateTotalLockerPage() {
       return;
     }
     try {
-      const res = await axios.put("http://localhost:3000/api/settings/update", {
+      const res = await axios.put("/api/settings/update", {
         totalLocker: number,
       });
       const { message, updated } = res.data;

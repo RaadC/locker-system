@@ -19,7 +19,7 @@ export default function RegisterUserPage() {
   useEffect(() => {
     const fetchUsers = () => {
       axios
-        .get("http://localhost:3000/api/display//users")
+        .get("/api/display//users")
         .then((res) => setUsers(res.data))
         .catch((err) => console.error("Failed to fetch active lockers", err));
     };
@@ -62,7 +62,7 @@ export default function RegisterUserPage() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/settings/insert-user",
+        "/api/settings/insert-user",
         {
           tupcID: formattedID,
           balance: parseFloat(balance),
@@ -80,7 +80,7 @@ export default function RegisterUserPage() {
     if (!confirm(`Are you sure you want to delete user ${tupcID}?`)) return;
 
     try {
-      await axios.delete(`http://localhost:3000/api/settings/delete-user/${tupcID}`);
+      await axios.delete(`/api/settings/delete-user/${tupcID}`);
       setUsers((prev) => prev.filter((user) => user.tupcID !== tupcID));
       setMessage(`User ${tupcID} deleted successfully.`);
     } catch (error) {
