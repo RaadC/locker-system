@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import TopBar from "../components/TopBar";
+import TopBar from "@/components/topBar";
 import { HelpCircle, Trash2, Settings, Plus } from "lucide-react";
-import { AddModal, UpdateModal, DeleteModal } from "../components/CRUDModals";
+import { AddModal, UpdateModal, DeleteModal } from "@/components/CRUDModals";
 
 export default function SuperadminPage() {
   const [account, setAccount] = useState([]);
