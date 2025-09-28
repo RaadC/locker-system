@@ -10,13 +10,13 @@ export default async function handler(req, res) {
   try {
     if (typeof totalLocker === "number") {
       const [[{ maxId } = {}]] = await db.query(
-        "SELECT MAX(id) AS maxId FROM lockerSlot WHERE status = 1"
+        "SELECT MAX(id) AS maxId FROM lockerslot WHERE status = 1"
       );
 
       const maxLockerId = maxId || 0;
 
       if (totalLocker >= maxLockerId) {
-        const [result] = await db.query("UPDATE totalLocker SET total = ?", [
+        const [result] = await db.query("UPDATE totallocker SET total = ?", [
           totalLocker,
         ]);
 
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
     }
 
     if (typeof currentCharge === "number") {
-      await db.query("UPDATE currentCharge SET fee = ?", [currentCharge]);
+      await db.query("UPDATE currentcharge SET fee = ?", [currentCharge]);
     }
 
     res.json({ success: true });

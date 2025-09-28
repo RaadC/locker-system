@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const [rows] = await db.query("SELECT * FROM lockerHistory ORDER BY id DESC");
+    const [rows] = await db.query("SELECT * FROM lockerhistory ORDER BY id DESC");
     res.status(200).json(rows);
   } catch (err) {
     console.error("Error in /api/display/locker-history:", err);

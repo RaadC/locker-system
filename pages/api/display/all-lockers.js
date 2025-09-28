@@ -8,8 +8,8 @@ export default async function handler(req, res) {
   try {
     const [rows] = await db.query(`
       SELECT id, tupcID 
-      FROM lockerSlot 
-      WHERE id <= (SELECT total FROM totalLocker LIMIT 1) 
+      FROM lockerslot 
+      WHERE id <= (SELECT total FROM totallocker LIMIT 1) 
       ORDER BY id ASC
     `);
     res.status(200).json(rows);

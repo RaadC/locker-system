@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       tupcID,
     ]);
     await db.query(
-      "INSERT INTO creditLoadHistory (tupcID, addedAmount) VALUES (?, ?)",
+      "INSERT INTO creditloadhistory (tupcID, addedAmount) VALUES (?, ?)",
       [tupcID, amount]
     );
     res.json({ message: "Balance updated successfully" });

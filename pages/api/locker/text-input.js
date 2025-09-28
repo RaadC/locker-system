@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const userId = user.id;
     const balance = parseFloat(user.balance);
 
-    const [feeRow] = await db.query("SELECT fee FROM currentCharge LIMIT 1");
+    const [feeRow] = await db.query("SELECT fee FROM currentcharge LIMIT 1");
     const fee = feeRow.length ? parseFloat(feeRow[0].fee) : 5;
 
     if (isNaN(balance)) {
@@ -40,13 +40,13 @@ export default async function handler(req, res) {
     }
 
     // Check if retrieving
-    const [existingSlot] = await db.query("SELECT * FROM lockerSlot WHERE tupcID = ?", [tupcId]);
+    const [existingSlot] = await db.query("SELECT * FROM lockerslot WHERE tupcID = ?", [tupcId]);
 
     if (existingSlot.length) {
       const lockerId = existingSlot[0].id;
-      await db.query("UPDATE lockerSlot SET tupcID = NULL, status = 0 WHERE id = ?", [lockerId]);
+      await db.query("UPDATE lockerslot SET tupcID = NULL, status = 0 WHERE id = ?", [lockerId]);
       await db.query(
-        "INSERT INTO lockerHistory (tupcID, slotNumber, action) VALUES (?, ?, 'retrieved')",
+        "INSERT INTO lockerhistory (tupcID, slotNumber, action) VALUES (?, ?, 'retrieved')",
         [tupcId, lockerId]
       );
 
@@ -62,9 +62,9 @@ export default async function handler(req, res) {
 
     // Find available slot
     const [available] = await db.query(`
-      SELECT id FROM lockerSlot
+      SELECT id FROM lockerslot
       WHERE status = 0
-        AND id <= (SELECT total FROM totalLocker LIMIT 1)
+        AND id <= (SELECT total FROM totallocker LIMIT 1)
       ORDER BY id ASC
       LIMIT 1
     `);
@@ -75,13 +75,13 @@ export default async function handler(req, res) {
     }
 
     const lockerId = available[0].id;
-    await db.query("UPDATE lockerSlot SET tupcID = ?, status = 1, dateTime = NOW() WHERE id = ?", [
+    await db.query("UPDATE lockerslot SET tupcID = ?, status = 1, dateTime = NOW() WHERE id = ?", [
       tupcId,
       lockerId,
     ]);
     await db.query("UPDATE users SET balance = balance - ? WHERE id = ?", [fee, userId]);
     await db.query(
-      "INSERT INTO lockerHistory (tupcID, slotNumber, action) VALUES (?, ?, 'stored')",
+      "INSERT INTO lockerhistory (tupcID, slotNumber, action) VALUES (?, ?, 'stored')",
       [tupcId, lockerId]
     );
 

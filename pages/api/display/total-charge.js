@@ -6,8 +6,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const [lockerRows] = await db.query("SELECT total FROM totalLocker LIMIT 1");
-    const [chargeRows] = await db.query("SELECT fee FROM currentCharge LIMIT 1");
+    const [lockerRows] = await db.query("SELECT total FROM totallocker LIMIT 1");
+    const [chargeRows] = await db.query("SELECT fee FROM currentcharge LIMIT 1");
 
     res.status(200).json({
       totalLocker: lockerRows[0]?.total ?? null,

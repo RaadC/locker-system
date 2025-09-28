@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   try {
     const [rows] = await db.query(`
       SELECT id, tupcID, dateTime 
-      FROM lockerSlot 
+      FROM lockerslot 
       WHERE status = 1
     `);
     res.status(200).json(rows);

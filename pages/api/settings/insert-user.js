@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       balance,
     ]);
     await db.query(
-      "INSERT INTO creditLoadHistory (tupcID, addedAmount) VALUES (?, ?)",
+      "INSERT INTO creditloadhistory (tupcID, addedAmount) VALUES (?, ?)",
       [tupcID, balance]
     );
     return res.status(201).json({ message: "User inserted successfully." });
