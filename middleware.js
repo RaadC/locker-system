@@ -17,7 +17,7 @@ export async function middleware(req) {
     "/set-payment",
     "/add-slots",
     "/control-locker",
-    //"/locker-logs",
+    "/locker-logs",
   ];
 
   const superAdminPaths = ["/account-control"];
@@ -87,7 +87,7 @@ export const config = {
     "/set-payment/:path*",
     "/add-slots/:path*",
     "/control-locker/:path*",
-    //"/locker-logs/:path*",
+    "/locker-logs/:path*",
     "/account-control/:path*",
     "/admin-login",
   ],

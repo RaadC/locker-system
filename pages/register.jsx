@@ -19,7 +19,7 @@ export default function RegisterUserPage() {
   useEffect(() => {
     const fetchUsers = () => {
       axios
-        .get("/api/display//users")
+        .get("/api/display/users")
         .then((res) => setUsers(res.data))
         .catch((err) => console.error("Failed to fetch active lockers", err));
     };
