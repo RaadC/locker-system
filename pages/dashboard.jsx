@@ -23,7 +23,7 @@ export default function DashboardPage() {
     };
 
     fetchLockers();
-    const interval = setInterval(fetchLockers, 5000);
+    const interval = setInterval(fetchLockers, 3000);
     return () => clearInterval(interval);
   }, []);
 

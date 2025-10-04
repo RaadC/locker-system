@@ -71,6 +71,10 @@ export default function RegisterUserPage() {
       setMessage(response.data.message || "User inserted successfully");
       setTupcID("");
       setBalance("");
+
+      const res = await axios.get("/api/display/users");
+      setUsers(res.data);
+
     } catch (error) {
       setMessage("User ID already registered");
     }
@@ -83,6 +87,7 @@ export default function RegisterUserPage() {
       await axios.delete(`/api/settings/delete-user/${tupcID}`);
       setUsers((prev) => prev.filter((user) => user.tupcID !== tupcID));
       setMessage(`User ${tupcID} deleted successfully.`);
+      
     } catch (error) {
       setMessage(`Failed to delete user ${tupcID}.`);
     }
