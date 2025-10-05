@@ -89,6 +89,10 @@ export default function DashboardPage() {
                           {locker.tupcID && (
                             <div className="absolute inset-0 bg-white/50"></div>
                           )}
+                          {locker.initial === 1 && (
+                            <div className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full shadow-md"></div>
+                          )}
+
                           <span className="absolute top-1 right-2 text-xs font-bold text-gray-700">
                             {locker.id}
                           </span>
@@ -105,6 +109,7 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
+
           <div className="fixed bottom-4 right-4 group z-50">
             <div className="bg-white text-blue-600 rounded-full w-12 h-12 flex items-center justify-center cursor-pointer shadow-lg hover:bg-gray-100 transition duration-200">
               <HelpCircle className="w-6 h-6" />

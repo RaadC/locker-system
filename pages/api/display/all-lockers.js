@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   try {
     const [rows] = await db.query(`
-      SELECT id, tupcID 
+      SELECT id, tupcID, initial
       FROM lockerslot 
       WHERE id <= (SELECT total FROM totallocker LIMIT 1) 
       ORDER BY id ASC
