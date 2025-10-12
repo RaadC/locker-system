@@ -21,7 +21,9 @@ export default async function handler(req, res) {
 
   try {
     // Check if registered
-    const [userRows] = await db.query("SELECT * FROM users WHERE tupcID = ?", [tupcId]);
+    const [userRows] = await db.query("SELECT * FROM users WHERE tupcID = ?", [
+      tupcId,
+    ]);
     if (!userRows.length) {
       store.lockerToOpen = { error: "unregistered_user" };
       return res.json(store.lockerToOpen);
@@ -29,22 +31,31 @@ export default async function handler(req, res) {
 
     const user = userRows[0];
     const userId = user.id;
-    const balance = parseFloat(user.balance);
+    let balance = parseFloat(user.balance);
 
     const [feeRow] = await db.query("SELECT fee FROM currentcharge LIMIT 1");
     const fee = feeRow.length ? parseFloat(feeRow[0].fee) : 5;
 
     if (isNaN(balance)) {
-      store.lockerToOpen = { error: "invalid_balance_format", balanceRem: balance };
+      store.lockerToOpen = {
+        error: "invalid_balance_format",
+        balanceRem: balance,
+      };
       return res.json(store.lockerToOpen);
     }
 
     // Check if retrieving
-    const [existingSlot] = await db.query("SELECT * FROM lockerslot WHERE tupcID = ?", [tupcId]);
+    const [existingSlot] = await db.query(
+      "SELECT * FROM lockerslot WHERE tupcID = ?",
+      [tupcId]
+    );
 
     if (existingSlot.length) {
       const lockerId = existingSlot[0].id;
-      await db.query("UPDATE lockerslot SET tupcID = NULL, status = 0 WHERE id = ?", [lockerId]);
+      await db.query(
+        "UPDATE lockerslot SET tupcID = NULL, status = 0 WHERE id = ?",
+        [lockerId]
+      );
       await db.query(
         "INSERT INTO lockerhistory (tupcID, slotNumber, action) VALUES (?, ?, 'retrieved')",
         [tupcId, lockerId]
@@ -56,7 +67,10 @@ export default async function handler(req, res) {
 
     // Check if storing (balance vs fee)
     if (balance < fee) {
-      store.lockerToOpen = { error: "insufficient_balance", balanceRem: balance };
+      store.lockerToOpen = {
+        error: "insufficient_balance",
+        balanceRem: balance,
+      };
       return res.json(store.lockerToOpen);
     }
 
@@ -75,17 +89,31 @@ export default async function handler(req, res) {
     }
 
     const lockerId = available[0].id;
-    await db.query("UPDATE lockerslot SET tupcID = ?, status = 1, dateTime = NOW() WHERE id = ?", [
-      tupcId,
-      lockerId,
+
+    // Deduct fee and assign locker
+    await db.query("UPDATE users SET balance = balance - ? WHERE id = ?", [
+      fee,
+      userId,
     ]);
-    await db.query("UPDATE users SET balance = balance - ? WHERE id = ?", [fee, userId]);
+    await db.query(
+      "UPDATE lockerslot SET tupcID = ?, status = 1, dateTime = NOW() WHERE id = ?",
+      [tupcId, lockerId]
+    );
     await db.query(
       "INSERT INTO lockerhistory (tupcID, slotNumber, action) VALUES (?, ?, 'stored')",
       [tupcId, lockerId]
     );
 
-    store.lockerToOpen = { lockerToOpen: lockerId, balanceRem: balance };
+    //Re-fetch the updated balance
+    const [updatedUser] = await db.query(
+      "SELECT balance FROM users WHERE id = ?",
+      [userId]
+    );
+    const updatedBalance = updatedUser.length
+      ? parseFloat(updatedUser[0].balance)
+      : 0;
+
+    store.lockerToOpen = { lockerToOpen: lockerId, balanceRem: updatedBalance };
     return res.json(store.lockerToOpen);
   } catch (err) {
     console.error(err);
