@@ -23,7 +23,7 @@ export async function middleware(req) {
   const superAdminPaths = ["/account-control"];
 
   //If token exists and user tries to access login → redirect them away
-  if (token && url.startsWith("/")) {
+  if (token && url.startsWith("/admin-login")) {
     try {
       const { payload } = await jwtVerify(token, secret);
 
