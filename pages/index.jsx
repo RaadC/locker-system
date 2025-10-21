@@ -1,116 +1,69 @@
-"use client";
-import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
-
-export default function AdminLoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const router = useRouter();
-
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(""), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        // save token in cookies
-        Cookies.set("token", data.token, { expires: 1 });
-        console.log("Token stored:", data.token);
-
-        setMessage("Login success, loading...");
-
-        //redirect based on role
-        setTimeout(() => {
-          if (data.role === 0) {
-            router.push("/account-control");
-          } else if (data.role === 1) {
-            router.push("/dashboard");
-          } else {
-            router.push("/admin-login");
-          }
-        }, 800);
-      } else {
-        setMessage(data.message || "Login failed");
-      }
-    } catch (err) {
-      setMessage("Server error");
-    }
-  };
-
+// app/page.tsx
+export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      <div className="flex flex-col items-center justify-center flex-1 p-8 bg-gradient-to-br from-blue-950 via-blue-900 to-blue-400 text-gray-50">
-        <img
-          src="/logo.png"
-          alt="Logo"
-          className="h-20 w-20 object-contain mb-6"
-        />
-        <h1 className="text-3xl font-bold mb-2">TUPC Helmet Locker System</h1>
-        <p className="text-gray-200 text-sm text-center max-w-xs">
-          Secure and reliable locker management system for helmets.
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4">
+          Get started by editing&nbsp;
+          <code className="font-mono font-bold">app/page.tsx</code>
         </p>
       </div>
-      <div className="flex flex-1 items-center justify-center p-8 bg-gray-50">
-        <form
-          onSubmit={handleLogin}
-          className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-4"
-        >
-          <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">
-            Admin Login
-          </h2>
-          <p className="text-gray-500 text-sm text-center mb-4">
-            Sign in to manage the system
-          </p>
 
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-
-          <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">
-            Login
-          </button>
-        </form>
+      <div className="relative flex place-items-center">
+        <h1 className="text-5xl font-bold">
+          Welcome to <span className="text-blue-600">Next.js 13!</span>
+        </h1>
       </div>
 
-      {message && (
-        <div
-          className={`fixed top-6 right-6 z-50 px-4 py-2 rounded shadow-lg text-sm animate-fade-in-out ${
-            message.toLowerCase().includes("success")
-              ? "bg-green-500 text-white"
-              : "bg-red-500 text-white"
-          }`}
+      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
+        <a
+          href="https://nextjs.org/docs"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100"
         >
-          {message}
-        </div>
-      )}
-    </div>
+          <h2 className="mb-3 text-2xl font-semibold">
+            Docs <span>-&gt;</span>
+          </h2>
+          <p className="m-0 text-sm opacity-50">
+            Find in-depth information about Next.js features and API.
+          </p>
+        </a>
+
+        <a
+          href="https://nextjs.org/learn"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100"
+        >
+          <h2 className="mb-3 text-2xl font-semibold">
+            Learn <span>-&gt;</span>
+          </h2>
+          <p className="m-0 text-sm opacity-50">
+            Learn about Next.js in an interactive course with quizzes!
+          </p>
+        </a>
+
+        <a
+          href="https://vercel.com/templates"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100"
+        >
+          <h2 className="mb-3 text-2xl font-semibold">
+            Templates <span>-&gt;</span>
+          </h2>
+          <p className="m-0 text-sm opacity-50">
+            Discover and deploy boilerplate example Next.js projects.
+          </p>
+        </a>
+
+        <a
+          href="https://vercel.com/new"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100"
+        >
+          <h2 className="mb-3 text-2xl font-semibold">
+            Deploy <span>-&gt;</span>
+          </h2>
+          <p className="m-0 text-sm opacity-50">
+            Instantly deploy your Next.js site with Vercel.
+          </p>
+        </a>
+      </div>
+    </main>
   );
 }
