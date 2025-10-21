@@ -64,7 +64,7 @@ export default function UpdateChargePage() {
   };
   const handleFreeClick = async () => {
     if (currentValue === 0) {
-      setMessage("Charge is already set to FREE (₱0).");
+      setMessage("Charge is already waived (₱0).");
       setIsSuccess(false);
       return;
     }
@@ -74,10 +74,10 @@ export default function UpdateChargePage() {
       });
       setCurrentCharge(0);
       setCurrentValue(0);
-      setMessage("Charge set to FREE (₱0).");
+      setMessage("Charge has been waived (₱0).");
       setIsSuccess(true);
     } catch {
-      setMessage("Failed to set charge to FREE.");
+      setMessage("Failed to waive charges.");
       setIsSuccess(false);
     }
   };
@@ -92,7 +92,7 @@ export default function UpdateChargePage() {
         <main className="flex-1 flex justify-center items-start pt-25 p-6 bg-gray-50">
           <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md space-y-6">
             <h1 className="text-xl font-semibold text-center">
-              Adjust Charging Fee
+              Adjust Charged Fee
             </h1>
             <p className="text-sm text-center text-gray-600">
               Current Charge: <strong>₱{currentValue}</strong>
@@ -118,7 +118,7 @@ export default function UpdateChargePage() {
                   onClick={handleFreeClick}
                   className="flex-1 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-200"
                 >
-                  Free
+                  Waive
                 </button>
               </div>
             </form>
@@ -138,7 +138,7 @@ export default function UpdateChargePage() {
               <HelpCircle className="w-6 h-6" />
             </div>
             <div className="absolute bottom-14 right-0 w-72 text-sm text-white bg-gray-900 p-3 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50 shadow-lg">
-              "Update" to save changes in fee and "Free" to set fee to 0
+              "Update" to save changes in fee and "Waive" to set fee to 0
             </div>
           </div>
         </main>

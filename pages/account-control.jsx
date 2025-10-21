@@ -232,7 +232,7 @@ export default function SuperadminPage() {
             <table className="min-w-full text-sm text-center">
               <thead className="bg-blue-100">
                 <tr>
-                  <th className="px-4 py-2">User ID</th>
+                  <th className="px-4 py-2 uppercase">User ID</th>
                   <th className="px-4 py-2">Locker ID</th>
                   <th className="px-4 py-2">Action</th>
                   <th className="px-4 py-2">Date</th>
@@ -244,9 +244,9 @@ export default function SuperadminPage() {
                     key={entry.id}
                     className="bg-white hover:bg-gray-50 border-b"
                   >
-                    <td className="px-4 py-2">{entry.tupcID}</td>
+                    <td className="px-4 py-2 uppercase">{entry.tupcID}</td>
                     <td className="px-4 py-2">{entry.slotNumber}</td>
-                    <td className="px-4 py-2">{entry.action}</td>
+                    <td className="px-4 py-2 uppercase">{entry.action}</td>
                     <td className="px-4 py-2">{formatDate(entry.dateTime)}</td>
                   </tr>
                 ))}
