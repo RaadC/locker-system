@@ -23,7 +23,7 @@ export async function middleware(req) {
   const superAdminPaths = ["/account-control"];
 
   //If token exists and user tries to access login → redirect them away
-  if (token && url.startsWith("/admin-login")) {
+  if (token && url.startsWith("/")) {
     try {
       const { payload } = await jwtVerify(token, secret);
 
@@ -50,7 +50,7 @@ export async function middleware(req) {
       adminPaths.some((path) => url.startsWith(path)) ||
       superAdminPaths.some((path) => url.startsWith(path))
     ) {
-      return NextResponse.redirect(new URL("/admin-login", req.url));
+      return NextResponse.redirect(new URL("/", req.url));
     }
     return NextResponse.next();
   }
@@ -68,12 +68,12 @@ export async function middleware(req) {
     //Admin routes (both 0 = superadmin, 1 = admin allowed)
     if (adminPaths.some((path) => url.startsWith(path))) {
       if (![0, 1].includes(payload.role)) {
-        return NextResponse.redirect(new URL("/admin-login", req.url));
+        return NextResponse.redirect(new URL("/", req.url));
       }
     }
   } catch (err) {
     console.error("JWT verification failed in middleware:", err);
-    return NextResponse.redirect(new URL("/admin-login", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();
@@ -89,6 +89,6 @@ export const config = {
     "/control-locker/:path*",
     "/locker-logs/:path*",
     "/account-control/:path*",
-    "/admin-login",
+    "/",
   ],
 };
