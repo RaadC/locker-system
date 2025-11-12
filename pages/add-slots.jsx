@@ -58,6 +58,10 @@ export default function UpdateTotalLockerPage() {
       setMessage("Value must be at least 10");
       return;
     }
+    if (number > 15) {
+      setMessage("The system can only add upto 15 slots currently");
+      return;
+    }
     if (number < maxUsedId) {
       setMessage(
         `Value cannot be less than highest used locker slot ${maxUsedId}`
