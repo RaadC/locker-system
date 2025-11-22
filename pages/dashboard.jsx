@@ -45,67 +45,71 @@ export default function DashboardPage() {
         <Sidebar isOpen={sidebarOpen} />
         <div className="flex-1 pt-25 p-6 overflow-y-auto bg-gray-50">
           <div className="bg-white shadow rounded-xl p-6">
-            <div className="flex flex-col md:flex-row gap-6">
-              <div className="flex flex-col items-center justify-center gap-6 md:w-1/4">
-                <div className="text-center bg-gray-50 p-4 rounded-lg shadow w-40">
-                  <p className="text-2xl font-bold text-green-600">
-                    {totalAvailable}
-                  </p>
-                  <p className="text-gray-600 text-sm">Available</p>
-                </div>
-                <div className="text-center bg-gray-50 p-4 rounded-lg shadow w-40">
-                  <p className="text-2xl font-bold text-red-600">
-                    {totalOccupied}
-                  </p>
-                  <p className="text-gray-600 text-sm">Occupied</p>
-                </div>
-                <div className="text-center bg-gray-50 p-4 rounded-lg shadow w-40">
-                  <p className="text-2xl font-bold text-blue-600">
-                    {lockers.length}
-                  </p>
-                  <p className="text-gray-600 text-sm">Total Lockers</p>
-                </div>
-              </div>
-              <div className="flex-1 flex justify-center">
-                <div className="flex gap-6 p-6 flex-wrap md:flex-nowrap">
-                  {columns.map((col, colIndex) => (
-                    <div key={colIndex} className="flex flex-col gap-3">
-                      {col.map((locker) => (
-                        <div
-                          key={locker.id}
-                          className="relative w-24 h-24 flex flex-col items-center justify-center rounded-xl shadow-md overflow-hidden"
-                          style={{
-                            backgroundColor: locker.tupcID
-                              ? "white"
-                              : "#bbf7d0",
-                            backgroundImage: locker.tupcID
-                              ? "url('/helmet.png')"
-                              : "none",
-                            backgroundSize: "50%",
-                            backgroundRepeat: "no-repeat",
-                            backgroundPosition: "center",
-                          }}
-                        >
-                          {locker.tupcID && (
-                            <div className="absolute inset-0 bg-white/50"></div>
-                          )}
-                          {locker.initial === 1 && (
-                            <div className="absolute top-1 left-1 w-3 h-3 bg-red-500 rounded-full shadow-md"></div>
-                          )}
 
-                          <span className="absolute top-1 right-2 text-xs font-bold text-gray-700">
-                            {locker.id}
+            {/* Totals at top horizontally */}
+            <div className="flex gap-6 justify-center mb-6">
+              <div className="text-center bg-gray-50 p-4 rounded-lg shadow w-40">
+                <p className="text-2xl font-bold text-green-600">
+                  {totalAvailable}
+                </p>
+                <p className="text-gray-600 text-sm">Available</p>
+              </div>
+
+              <div className="text-center bg-gray-50 p-4 rounded-lg shadow w-40">
+                <p className="text-2xl font-bold text-red-600">
+                  {totalOccupied}
+                </p>
+                <p className="text-gray-600 text-sm">Occupied</p>
+              </div>
+
+              <div className="text-center bg-gray-50 p-4 rounded-lg shadow w-40">
+                <p className="text-2xl font-bold text-blue-600">
+                  {lockers.length}
+                </p>
+                <p className="text-gray-600 text-sm">Total Lockers</p>
+              </div>
+            </div>
+
+            {/* Locker grid below */}
+            <div className="flex justify-center">
+              <div className="flex gap-6 p-6 flex-wrap md:flex-nowrap">
+                {columns.map((col, colIndex) => (
+                  <div key={colIndex} className="flex flex-col gap-3">
+                    {col.map((locker) => (
+                      <div
+                        key={locker.id}
+                        className="relative w-24 h-24 flex flex-col items-center justify-center rounded-xl shadow-md overflow-hidden"
+                        style={{
+                          backgroundColor: locker.tupcID ? "white" : "#bbf7d0",
+                          backgroundImage: locker.tupcID
+                            ? "url('/helmet.png')"
+                            : "none",
+                          backgroundSize: "50%",
+                          backgroundRepeat: "no-repeat",
+                          backgroundPosition: "center",
+                        }}
+                      >
+                        {locker.tupcID && (
+                          <div className="absolute inset-0 bg-white/50"></div>
+                        )}
+
+                        {locker.initial === 1 && (
+                          <div className="absolute top-1 left-1 w-3 h-3 bg-red-500 rounded-full shadow-md"></div>
+                        )}
+
+                        <span className="absolute top-1 right-2 text-xs font-bold text-gray-700">
+                          {locker.id}
+                        </span>
+
+                        {locker.tupcID && (
+                          <span className="absolute bottom-1 text-[10px] font-semibold text-gray-700 bg-white/70 px-1 rounded uppercase">
+                            {locker.tupcID}
                           </span>
-                          {locker.tupcID && (
-                            <span className="absolute bottom-1 text-[10px] font-semibold text-gray-700 bg-white/70 px-1 rounded uppercase">
-                              {locker.tupcID}
-                            </span>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
