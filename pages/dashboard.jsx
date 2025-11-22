@@ -46,8 +46,7 @@ export default function DashboardPage() {
         <div className="flex-1 pt-25 p-6 overflow-y-auto bg-gray-50">
           <div className="bg-white shadow rounded-xl p-6">
 
-            {/* Totals at top horizontally */}
-            <div className="flex gap-6 justify-center mb-6">
+            <div className="flex gap-6 justify-center mb-3">
               <div className="text-center bg-gray-50 p-4 rounded-lg shadow w-40">
                 <p className="text-2xl font-bold text-green-600">
                   {totalAvailable}
@@ -60,13 +59,6 @@ export default function DashboardPage() {
                   {totalOccupied}
                 </p>
                 <p className="text-gray-600 text-sm">Occupied</p>
-              </div>
-
-              <div className="text-center bg-gray-50 p-4 rounded-lg shadow w-40">
-                <p className="text-2xl font-bold text-blue-600">
-                  {lockers.length}
-                </p>
-                <p className="text-gray-600 text-sm">Total Lockers</p>
               </div>
             </div>
 
